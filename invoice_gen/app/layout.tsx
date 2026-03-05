@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Invoice Generator",
-  description: "It is a free invoice generator used for business invoicing and financial management",
+  title: "InvGen | Generate Pro Invoices",
+  description:
+    "It is a free invoice generator used for business invoicing and financial management",
 };
 
 export default function RootLayout({
@@ -25,9 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50`}
       >
-        {children}
+        {" "}
+        <ClerkProvider afterSignOutUrl="/">
+          <Navbar />
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );

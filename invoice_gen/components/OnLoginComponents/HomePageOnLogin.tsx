@@ -2,13 +2,15 @@
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { FileText, Users, CreditCard, Plus, ArrowUpRight } from "lucide-react";
+import { getClientsAction } from "@/app/actions/clients";
 
 export default async function HomepageOnLogin() {
   const user = await currentUser();
+  const clients = await getClientsAction();
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">
-      {/* 1. Welcome Header */}
+      {/* Header */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -27,26 +29,28 @@ export default async function HomepageOnLogin() {
         </Link>
       </header>
 
-      {/* 2. Stat Grid (The "Visual Filler") */}
+      {/* Homepage revenue and all */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
         {[
           {
             label: "Total Revenue",
-            value: "$0.00",
+            value: clients
+              .reduce((sum, c) => sum + c.totalBilled, 0)
+              .toLocaleString("en-IN"),
             icon: CreditCard,
             color: "text-emerald-600",
             bg: "bg-emerald-50",
           },
           {
-            label: "Active Invoices",
-            value: "0",
+            label: "Total Invoices",
+            value: clients.reduce((sum, c) => sum + c.invoiceCount, 0),
             icon: FileText,
             color: "text-blue-600",
             bg: "bg-blue-50",
           },
           {
             label: "Total Clients",
-            value: "0",
+            value: clients.length,
             icon: Users,
             color: "text-purple-600",
             bg: "bg-purple-50",
@@ -69,7 +73,7 @@ export default async function HomepageOnLogin() {
         ))}
       </div>
 
-      {/* 3. Main Navigation Cards */}
+      {/* Navigation Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/dashboard"
@@ -86,7 +90,6 @@ export default async function HomepageOnLogin() {
               Go to Dashboard <ArrowUpRight size={16} className="ml-1" />
             </div>
           </div>
-          {/* Subtle background icon for design flare */}
           <FileText
             className="absolute -bottom-4 -right-4 text-slate-50 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
             size={160}

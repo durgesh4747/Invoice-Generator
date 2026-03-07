@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className=" border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Column 1: Brand & Social */}
+          {/* Brand Detaild */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="text-xl font-bold text-slate-900">
               GetInv<span className="text-blue-600">.</span>
@@ -18,14 +18,14 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex gap-4 text-slate-400">
               <a
-                href="https://github.com/your-username"
+                href="https://github.com/durgesh4747"
                 target="_blank"
                 className="hover:text-slate-900 transition-colors"
               >
                 <Github size={20} />
               </a>
               <a
-                href="https://linkedin.com/in/your-profile"
+                href="https://in.linkedin.com/in/durgesh-sutariya-929b82333"
                 target="_blank"
                 className="hover:text-slate-900 transition-colors"
               >
@@ -40,7 +40,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Dynamic Product Links */}
+          {/* Product Links */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">
               Product
@@ -101,7 +101,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Developer/Company */}
+          {/* Developer Details */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">
               Developer
@@ -129,7 +129,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="/contact"
+                  href="https://durgeshdev.in/#contact"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-slate-500 hover:text-blue-600"

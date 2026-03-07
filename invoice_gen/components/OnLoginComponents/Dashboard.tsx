@@ -39,9 +39,8 @@ export default function DashboardUI({ invoices }: { invoices: Invoice[] }) {
           </Link>
         </div>
 
-        {/* Table Container */}
+        {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          {/* Table Header */}
           <div className="grid grid-cols-2 md:grid-cols-5 border-b border-slate-100 bg-slate-50/50 px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
             <span>Invoice</span>
             <span className="hidden md:block">Client</span>
@@ -81,7 +80,7 @@ export default function DashboardUI({ invoices }: { invoices: Invoice[] }) {
                     </span>
                   </div>
 
-                  {/* Client Info (Desktop) */}
+                  {/* Client Info */}
                   <div className="hidden md:flex flex-col">
                     <span className="font-semibold text-slate-700">
                       {invoice.client.name}

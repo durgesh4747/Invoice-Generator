@@ -88,6 +88,8 @@ export const ClientScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  country: 'country',
+  isArchived: 'isArchived',
   userId: 'userId'
 } as const
 
@@ -97,7 +99,13 @@ export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof 
 export const InvoiceScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
+  fromName: 'fromName',
+  fromEmail: 'fromEmail',
+  clientName: 'clientName',
+  clientEmail: 'clientEmail',
   totalAmount: 'totalAmount',
+  subtotal: 'subtotal',
+  taxAmount: 'taxAmount',
   issueDate: 'issueDate',
   userId: 'userId',
   clientId: 'clientId',
@@ -109,6 +117,7 @@ export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeo
 
 export const InvoiceItemScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   description: 'description',
   quantity: 'quantity',
   price: 'price',

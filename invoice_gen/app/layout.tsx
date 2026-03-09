@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LoaderProvider } from "@/components/GlobalLoader";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,9 +18,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GetInv | Generate Pro Invoices",
+  title: "GetInv | Generate Professional Invoices",
   description:
-    "It is a free invoice generator used for business invoicing and financial management",
+    "The fastest way to generate, manage, and download professional invoices for free.",
+  openGraph: {
+    title: "GetInv",
+    description: "Professional Invoice Generator for modern businesses.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -33,11 +39,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50`}
       >
         <ClerkProvider afterSignOutUrl="/">
-          <LoaderProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </LoaderProvider>
+          <Suspense fallback={<div className="fixed inset-0 bg-white" />}>
+            <LoaderProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </LoaderProvider>
+          </Suspense>
         </ClerkProvider>
       </body>
     </html>

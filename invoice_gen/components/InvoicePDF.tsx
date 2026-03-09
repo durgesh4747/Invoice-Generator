@@ -1,165 +1,418 @@
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { InvoiceItem, InvoicePayload } from "@/types";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+
+interface UserProfile {
+  fullName: string;
+  primaryEmail: string;
+}
 
 const styles = StyleSheet.create({
   page: { padding: 40, backgroundColor: "#FFFFFF", fontFamily: "Helvetica" },
+
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    marginBottom: 30,
+    borderBottomWidth: 2,
+    borderBottomColor: "#0f172a",
+    paddingBottom: 15,
+  },
+  invoiceNumber: { fontSize: 24, fontWeight: "bold", color: "#0f172a" },
+
+  addressSection: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 40,
   },
-  title: { fontSize: 24, fontWeight: "bold", color: "#1e293b" },
-  section: { marginBottom: 20 },
+  addressBox: { width: "45%" },
   label: {
-    fontSize: 10,
+    fontSize: 8,
     color: "#64748b",
     textTransform: "uppercase",
-    marginBottom: 4,
+    marginBottom: 6,
+    fontWeight: "bold",
   },
-  addressText: { fontSize: 12, color: "#0f172a", marginBottom: 2 },
+  addressText: { fontSize: 10, color: "#0f172a", marginBottom: 3 },
+  boldText: { fontWeight: "bold", fontSize: 11 },
 
-  table: {
-    display: "flex",
-    width: "auto",
-    borderStyle: "solid",
-    borderBottomWidth: 1,
-    borderColor: "#e2e8f0",
+  table: { marginTop: 10 },
+  tableHeader: {
+    flexDirection: "row",
+    backgroundColor: "#0f172a",
+    borderRadius: 4,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    marginBottom: 4,
   },
   tableRow: {
     flexDirection: "row",
-    borderTopWidth: 1,
-    borderTopColor: "#f1f5f9",
-    paddingVertical: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f1f5f9",
+    alignItems: "center",
   },
-  tableHeader: { backgroundColor: "#f8fafc", fontWeight: "bold" },
 
-  col6: { width: "50%" },
-  col2: { width: "16.6%" },
-  textRight: { textAlign: "right" },
-  textCenter: { textAlign: "center" },
-  itemText: { fontSize: 10, color: "#334155" },
+  // 🚨 Columns Swapped: Type is now before Description
+  colType: { width: "15%", textAlign: "left" },
+  colDesc: { width: "40%" },
+  colQty: { width: "10%", textAlign: "center" },
+  colPrice: { width: "15%", textAlign: "right" },
+  colTotal: { width: "20%", textAlign: "right" },
 
-  totalsSection: {
+  headerText: {
+    fontSize: 8,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textTransform: "uppercase",
+  },
+  cellText: { fontSize: 9, color: "#334155" },
+
+  // 🚨 No background on typeTag
+  typeTag: {
+    fontSize: 7,
+    color: "#475569",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+  },
+
+  summarySection: {
     marginTop: 30,
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: "column",
+    alignItems: "flex-end",
   },
-  totalsBox: { width: 150 },
+  totalsBox: { width: "40%" },
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 5,
+    marginBottom: 6,
+    alignItems: "center",
   },
   grandTotal: {
-    borderTopWidth: 2,
-    borderTopColor: "#000",
-    paddingTop: 8,
-    marginTop: 8,
-    fontSize: 16,
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#0f172a",
+  },
+  totalLabel: { fontSize: 9, color: "#64748b" },
+  totalValue: { fontSize: 10, fontWeight: "bold", color: "#0f172a" },
+  grandTotalLabel: { fontSize: 11, fontWeight: "bold", color: "#0f172a" },
+  grandTotalValue: { fontSize: 16, fontWeight: "bold", color: "#2563eb" },
+
+  statusWrapper: {
+    marginTop: 12,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  statusBadge: {
+    fontSize: 9,
+    padding: "6 12",
+    borderRadius: 5,
+    textTransform: "uppercase",
     fontWeight: "bold",
+    borderWidth: 1,
+  },
+
+  notesSection: {
+    marginTop: 50,
+    borderTopWidth: 1,
+    borderTopColor: "#f1f5f9",
+    paddingTop: 15,
   },
 });
 
-export const InvoicePDF = ({ invoice }: any) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Top */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>{invoice.invoiceNumber}</Text>
-          <Text style={{ fontSize: 10, color: "#64748b" }}>
-            Issued: {new Date(invoice.issueDate).toDateString()}
-          </Text>
-        </View>
-        <Text style={{ fontSize: 12, fontWeight: "bold", color: "#2563eb" }}>
-          PAID
-        </Text>
-      </View>
+export const InvoicePDF = ({ invoice, user }: { invoice:InvoicePayload; user: UserProfile }) => {
+  const formatAmount = (amount: number) => {
+    return Number(amount).toFixed(2);
+  };
 
-      {/* Address */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 40,
-        }}
-      >
-        <View>
-          <Text style={styles.label}>Billed From</Text>
-          <Text style={styles.addressText}>{invoice.fromName}</Text>
-          <Text style={styles.addressText}>{invoice.fromEmail}</Text>
-        </View>
-        <View style={styles.textRight}>
-          <Text style={styles.label}>Billed To</Text>
-          <Text style={styles.addressText}>{invoice.clientName}</Text>
-          <Text style={styles.addressText}>{invoice.clientEmail}</Text>
-        </View>
-      </View>
+  const getSymbol = (code: string) => {
+    switch (code) {
+      case "USD":
+        return "$";
+      case "GBP":
+        return "£";
+      case "EUR":
+        return "€";
+      case "INR":
+        return "Rs.";
+      default:
+        return "";
+    }
+  };
 
-      {/* ITems table */}
-      <View style={styles.table}>
-        <View style={[styles.tableRow, styles.tableHeader]}>
-          <Text style={[styles.col6, styles.itemText, { fontWeight: "bold" }]}>
-            Description
-          </Text>
-          <Text style={[styles.col2, styles.textCenter, styles.itemText]}>
-            Qty
-          </Text>
-          <Text style={[styles.col2, styles.textRight, styles.itemText]}>
-            Price
-          </Text>
-          <Text style={[styles.col2, styles.textRight, styles.itemText]}>
-            Total
-          </Text>
-        </View>
+  const symbol = getSymbol(invoice.currency);
+  const taxAmount =
+    (Number(invoice.subtotal) - Number(invoice.discountAmount)) *
+    (Number(invoice.taxRate) / 100);
+  const amountPaid = Number(invoice.amountPaid) || 0;
+  const balanceDue = Number(invoice.totalAmount) - amountPaid;
 
-        {invoice.items.map((item: any) => (
-          <View key={item.id} style={styles.tableRow}>
-            <Text style={[styles.col6, styles.itemText]}>
-              {item.description}
+  return (
+    <Document title={`INVOICE - ${invoice.invoiceNumber}`}>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.invoiceNumber}>#{invoice.invoiceNumber}</Text>
+            <Text style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>
+              Issued: {new Date(invoice.issueDate).toDateString()}
             </Text>
-            <Text style={[styles.col2, styles.textCenter, styles.itemText]}>
-              {item.quantity}
-            </Text>
-            <Text style={[styles.col2, styles.textRight, styles.itemText]}>
-              ₹{item.price}
-            </Text>
+          </View>
+          <View style={{ textAlign: "right" }}>
             <Text
+              style={{ fontSize: 20, fontWeight: "bold", color: "#0f172a" }}
+            >
+              INVOICE
+            </Text>
+            <Text style={{ fontSize: 9, color: "#64748b", marginTop: 4 }}>
+              Due Date: {new Date(invoice.dueDate).toLocaleDateString()}
+            </Text>
+          </View>
+        </View>
+
+        {/* Address Section */}
+        <View style={styles.addressSection}>
+          <View style={styles.addressBox}>
+            <Text style={styles.label}>Billed From</Text>
+            <Text style={[styles.addressText, styles.boldText]}>
+              {invoice.fromName || user.fullName}
+            </Text>
+            <Text style={styles.addressText}>
+              {invoice.fromEmail || user.primaryEmail}
+            </Text>
+          </View>
+          <View style={[styles.addressBox, { textAlign: "right" }]}>
+            <Text style={styles.label}>Billed To</Text>
+            <Text style={[styles.addressText, styles.boldText]}>
+              {invoice.clientName}
+            </Text>
+            <Text style={styles.addressText}>{invoice.clientEmail}</Text>
+            {invoice.clientRegion && (
+              <Text
+                style={[styles.addressText, { fontSize: 8, color: "#94a3b8" }]}
+              >
+                {invoice.clientRegion}
+              </Text>
+            )}
+          </View>
+        </View>
+
+        {/* Items Table */}
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Text style={[styles.colType, styles.headerText]}>Type</Text>
+            <Text style={[styles.colDesc, styles.headerText]}>Description</Text>
+            <Text style={[styles.colQty, styles.headerText]}>Qty</Text>
+            <Text style={[styles.colPrice, styles.headerText]}>Price</Text>
+            <Text style={[styles.colTotal, styles.headerText]}>Total</Text>
+          </View>
+
+          {invoice.items.map((item: InvoiceItem, index: number) => (
+            <View key={index} style={styles.tableRow}>
+              <View style={styles.colType}>
+                <Text style={styles.typeTag}>{item.type}</Text>
+              </View>
+              <Text style={[styles.colDesc, styles.cellText]}>
+                {item.description}
+              </Text>
+              <Text style={[styles.colQty, styles.cellText]}>
+                {item.quantity}
+              </Text>
+              {/* 🚨 Split Price Tag */}
+              <View
+                style={[
+                  styles.colPrice,
+                  { flexDirection: "row", justifyContent: "flex-end" },
+                ]}
+              >
+                <Text style={styles.cellText}>{symbol}</Text>
+                <Text style={styles.cellText}>
+                  {" "}
+                  {formatAmount(Number(item.price))}
+                </Text>
+              </View>
+              {/* 🚨 Split Total Tag */}
+              <View
+                style={[
+                  styles.colTotal,
+                  { flexDirection: "row", justifyContent: "flex-end" },
+                ]}
+              >
+                <Text style={[styles.cellText, { fontWeight: "bold" }]}>
+                  {symbol}
+                </Text>
+                <Text style={[styles.cellText, { fontWeight: "bold" }]}>
+                  {" "}
+                  {formatAmount(Number(item.quantity) * Number(item.price))}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+
+        {/* Totals & Status Section */}
+        <View style={styles.summarySection}>
+          <View style={styles.totalsBox}>
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>Subtotal</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.totalValue}>{symbol}</Text>
+                <Text style={styles.totalValue}>
+                  {" "}
+                  {formatAmount(Number(invoice.subtotal))}
+                </Text>
+              </View>
+            </View>
+
+            {Number(invoice.discountAmount) > 0 && (
+              <View style={styles.totalRow}>
+                <Text style={[styles.totalLabel, { color: "#ef4444" }]}>
+                  Discount
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={[styles.totalValue, { color: "#ef4444" }]}>
+                    {symbol}
+                  </Text>
+                  <Text style={[styles.totalValue, { color: "#ef4444" }]}>
+                    {" "}
+                    {formatAmount(Number(invoice.discountAmount))}
+                  </Text>
+                </View>
+              </View>
+            )}
+
+            {Number(invoice.taxRate) > 0 && (
+              <View style={styles.totalRow}>
+                <Text style={styles.totalLabel}>
+                  {invoice.taxLabel} ({invoice.taxRate}%)
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.totalValue}>{symbol}</Text>
+                  <Text style={styles.totalValue}>
+                    {" "}
+                    {formatAmount(taxAmount)}
+                  </Text>
+                </View>
+              </View>
+            )}
+
+            <View
               style={[
-                styles.col2,
-                styles.textRight,
-                styles.itemText,
-                { fontWeight: "bold" },
+                styles.totalRow,
+                styles.grandTotal,
+                {
+                  borderTopColor: "#f1f5f9",
+                  borderTopWidth: 1,
+                  paddingTop: 6,
+                  marginTop: 4,
+                },
               ]}
             >
-              ₹{item.quantity * item.price}
-            </Text>
-          </View>
-        ))}
-      </View>
+              <Text style={styles.totalLabel}>Grand Total</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.totalValue}>{symbol}</Text>
+                <Text style={styles.totalValue}>
+                  {" "}
+                  {formatAmount(Number(invoice.totalAmount))}
+                </Text>
+              </View>
+            </View>
 
-      {/* Total */}
-      <View style={styles.totalsSection}>
-        <View style={styles.totalsBox}>
-          <View style={styles.totalRow}>
-            <Text style={styles.itemText}>Subtotal:</Text>
-            <Text style={styles.itemText}>₹{invoice.subtotal}</Text>
-          </View>
-          <View style={styles.totalRow}>
-            <Text style={styles.itemText}>GST (18%):</Text>
-            <Text style={styles.itemText}>₹{invoice.taxAmount}</Text>
-          </View>
-          <View style={[styles.totalRow, styles.grandTotal]}>
-            <Text style={{ fontSize: 14 }}>Total:</Text>
-            <Text style={{ fontSize: 14 }}>₹{invoice.totalAmount}</Text>
+            <View style={[styles.totalRow, { marginTop: 2 }]}>
+              <Text style={[styles.totalLabel, { color: "#059669" }]}>
+                Amount Paid
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={[styles.totalValue, { color: "#059669" }]}>
+                  {symbol}
+                </Text>
+                <Text style={[styles.totalValue, { color: "#059669" }]}>
+                  {" "}
+                  {formatAmount(amountPaid)}
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.totalRow,
+                {
+                  marginTop: 8,
+                  paddingTop: 8,
+                  borderTopWidth: 1,
+                  borderTopColor: "#0f172a",
+                },
+              ]}
+            >
+              <Text style={[styles.grandTotalLabel, { fontSize: 10 }]}>
+                Balance Due
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={[
+                    styles.grandTotalValue,
+                    {
+                      fontSize: 13,
+                      color: balanceDue <= 0 ? "#059669" : "#0f172a",
+                    },
+                  ]}
+                >
+                  {symbol}
+                </Text>
+                <Text
+                  style={[
+                    styles.grandTotalValue,
+                    {
+                      fontSize: 13,
+                      color: balanceDue <= 0 ? "#059669" : "#0f172a",
+                    },
+                  ]}
+                >
+                  {" "}
+                  {formatAmount(balanceDue)}
+                </Text>
+              </View>
+            </View>
+
+            <View style={[styles.statusWrapper, { marginTop: 12 }]}>
+              <View
+                style={[
+                  styles.statusBadge,
+                  {
+                    backgroundColor:
+                      invoice.status === "PAID" ? "#ecfdf5" : "#f8fafc",
+                    color: invoice.status === "PAID" ? "#065f46" : "#475569",
+                    borderColor:
+                      invoice.status === "PAID" ? "#10b981" : "#e2e8f0",
+                    paddingHorizontal: 12,
+                    paddingVertical: 3,
+                  },
+                ]}
+              >
+                <Text style={{ fontSize: 7, letterSpacing: 0.5 }}>
+                  {invoice.status}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    </Page>
-  </Document>
-);
+
+        <View style={styles.notesSection}>
+          <Text style={styles.label}>Notes & Payment Terms</Text>
+          <Text
+            style={{
+              fontSize: 9,
+              color: "#475569",
+              lineHeight: 1.6,
+              marginTop: 4,
+            }}
+          >
+            {invoice.notes || "Standard payment terms apply."}
+          </Text>
+        </View>
+      </Page>
+    </Document>
+  );
+};

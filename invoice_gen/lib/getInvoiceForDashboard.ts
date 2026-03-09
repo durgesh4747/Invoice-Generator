@@ -6,6 +6,7 @@ export default async function getInvoicesForDashboard() {
   return prisma.invoice.findMany({
     where: {
       userId: user.id,
+      isArchived:false,
     },
     orderBy: { createdAt: "desc" },
     include: {

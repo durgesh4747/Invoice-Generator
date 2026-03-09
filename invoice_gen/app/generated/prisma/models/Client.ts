@@ -191,7 +191,7 @@ export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ClientGroupByOutputType = {
   id: number
-  name: string
+  name: string | null
   email: string | null
   country: string | null
   isArchived: boolean
@@ -223,7 +223,7 @@ export type ClientWhereInput = {
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   id?: Prisma.IntFilter<"Client"> | number
-  name?: Prisma.StringFilter<"Client"> | string
+  name?: Prisma.StringNullableFilter<"Client"> | string | null
   email?: Prisma.StringNullableFilter<"Client"> | string | null
   country?: Prisma.StringNullableFilter<"Client"> | string | null
   isArchived?: Prisma.BoolFilter<"Client"> | boolean
@@ -234,7 +234,7 @@ export type ClientWhereInput = {
 
 export type ClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   isArchived?: Prisma.SortOrder
@@ -248,7 +248,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
-  name?: Prisma.StringFilter<"Client"> | string
+  name?: Prisma.StringNullableFilter<"Client"> | string | null
   email?: Prisma.StringNullableFilter<"Client"> | string | null
   country?: Prisma.StringNullableFilter<"Client"> | string | null
   isArchived?: Prisma.BoolFilter<"Client"> | boolean
@@ -259,7 +259,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
 
 export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   isArchived?: Prisma.SortOrder
@@ -276,7 +276,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   OR?: Prisma.ClientScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ClientScalarWhereWithAggregatesInput | Prisma.ClientScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Client"> | number
-  name?: Prisma.StringWithAggregatesFilter<"Client"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   country?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   isArchived?: Prisma.BoolWithAggregatesFilter<"Client"> | boolean
@@ -284,7 +284,7 @@ export type ClientScalarWhereWithAggregatesInput = {
 }
 
 export type ClientCreateInput = {
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -294,7 +294,7 @@ export type ClientCreateInput = {
 
 export type ClientUncheckedCreateInput = {
   id?: number
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -303,7 +303,7 @@ export type ClientUncheckedCreateInput = {
 }
 
 export type ClientUpdateInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -313,7 +313,7 @@ export type ClientUpdateInput = {
 
 export type ClientUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -323,7 +323,7 @@ export type ClientUncheckedUpdateInput = {
 
 export type ClientCreateManyInput = {
   id?: number
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -331,7 +331,7 @@ export type ClientCreateManyInput = {
 }
 
 export type ClientUpdateManyMutationInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -339,7 +339,7 @@ export type ClientUpdateManyMutationInput = {
 
 export type ClientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -393,9 +393,9 @@ export type ClientSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
 }
 
-export type ClientScalarRelationFilter = {
-  is?: Prisma.ClientWhereInput
-  isNot?: Prisma.ClientWhereInput
+export type ClientNullableScalarRelationFilter = {
+  is?: Prisma.ClientWhereInput | null
+  isNot?: Prisma.ClientWhereInput | null
 }
 
 export type ClientCreateNestedManyWithoutUserInput = {
@@ -450,16 +450,18 @@ export type ClientCreateNestedOneWithoutInvoicesInput = {
   connect?: Prisma.ClientWhereUniqueInput
 }
 
-export type ClientUpdateOneRequiredWithoutInvoicesNestedInput = {
+export type ClientUpdateOneWithoutInvoicesNestedInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutInvoicesInput, Prisma.ClientUncheckedCreateWithoutInvoicesInput>
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutInvoicesInput
   upsert?: Prisma.ClientUpsertWithoutInvoicesInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
   connect?: Prisma.ClientWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutInvoicesInput, Prisma.ClientUpdateWithoutInvoicesInput>, Prisma.ClientUncheckedUpdateWithoutInvoicesInput>
 }
 
 export type ClientCreateWithoutUserInput = {
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -468,7 +470,7 @@ export type ClientCreateWithoutUserInput = {
 
 export type ClientUncheckedCreateWithoutUserInput = {
   id?: number
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -506,7 +508,7 @@ export type ClientScalarWhereInput = {
   OR?: Prisma.ClientScalarWhereInput[]
   NOT?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
   id?: Prisma.IntFilter<"Client"> | number
-  name?: Prisma.StringFilter<"Client"> | string
+  name?: Prisma.StringNullableFilter<"Client"> | string | null
   email?: Prisma.StringNullableFilter<"Client"> | string | null
   country?: Prisma.StringNullableFilter<"Client"> | string | null
   isArchived?: Prisma.BoolFilter<"Client"> | boolean
@@ -514,7 +516,7 @@ export type ClientScalarWhereInput = {
 }
 
 export type ClientCreateWithoutInvoicesInput = {
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -523,7 +525,7 @@ export type ClientCreateWithoutInvoicesInput = {
 
 export type ClientUncheckedCreateWithoutInvoicesInput = {
   id?: number
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
@@ -547,7 +549,7 @@ export type ClientUpdateToOneWithWhereWithoutInvoicesInput = {
 }
 
 export type ClientUpdateWithoutInvoicesInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -556,7 +558,7 @@ export type ClientUpdateWithoutInvoicesInput = {
 
 export type ClientUncheckedUpdateWithoutInvoicesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -565,14 +567,14 @@ export type ClientUncheckedUpdateWithoutInvoicesInput = {
 
 export type ClientCreateManyUserInput = {
   id?: number
-  name: string
+  name?: string | null
   email?: string | null
   country?: string | null
   isArchived?: boolean
 }
 
 export type ClientUpdateWithoutUserInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -581,7 +583,7 @@ export type ClientUpdateWithoutUserInput = {
 
 export type ClientUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -590,7 +592,7 @@ export type ClientUncheckedUpdateWithoutUserInput = {
 
 export type ClientUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -689,7 +691,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    name: string
+    name: string | null
     email: string | null
     country: string | null
     isArchived: boolean

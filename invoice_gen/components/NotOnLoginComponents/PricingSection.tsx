@@ -1,3 +1,4 @@
+import { SignUpButton } from "@clerk/nextjs";
 import { Check } from "lucide-react";
 
 export function PricingSection() {
@@ -45,10 +46,11 @@ export function PricingSection() {
                 </li>
               ))}
             </ul>
-
-            <button className="mt-10 w-full py-3 px-6 rounded-xl border border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition-colors">
-              Get Started
-            </button>
+            <SignUpButton mode="modal">
+              <button className="mt-10 w-full py-3 px-6 rounded-xl border border-blue-600 text-blue-600 font-bold hover:bg-blue-50 transition-colors">
+                Get Started
+              </button>
+            </SignUpButton>
           </div>
 
           {/* Pro Plan (Beta) */}
@@ -82,10 +84,11 @@ export function PricingSection() {
                 </li>
               ))}
             </ul>
-
-            <button className="mt-10 w-full py-3 px-6 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95">
-              Join Beta Free
-            </button>
+            <SignUpButton mode="modal">
+              <button className="mt-10 w-full py-3 px-6 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95">
+                Join Beta Free
+              </button>
+            </SignUpButton>
           </div>
         </div>
       </div>

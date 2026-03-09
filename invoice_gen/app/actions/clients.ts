@@ -4,7 +4,21 @@ import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-//  Fetch only acitve clients
+interface Invoice {
+  id: number;
+  totalAmount: number;
+  currency: string;
+  status: "PAID" | "PENDING" | string;
+  issueDate: Date;
+  invoiceNumber: string;
+}
+interface PrismaClientWithInvoices {
+  id: number;
+  name: string | null;
+  email: string | null;
+  country: string | null;
+  invoices: Invoice[];
+}
 
 export async function getClientsAction() {
   const user = await currentUser();
@@ -28,29 +42,30 @@ export async function getClientsAction() {
       userId: dbUser.id,
       isArchived: false,
     },
-    include: {
-      invoices: {
-        select: { totalAmount: true },
-      },
-    },
+    include: { invoices: true },
     orderBy: { id: "desc" },
   });
 
-  return clients.map((client: any) => ({
-    id: client.id,
-    name: client.name,
-    email: client.email,
-    country: client.country,
-    totalBilled: client.invoices.reduce(
-      (sum: number, inv: any) => sum + inv.totalAmount,
-      0,
-    ),
-    invoiceCount: client.invoices.length,
-  }));
+  return clients.map((client: PrismaClientWithInvoices) => {
+    const currency =
+      client.invoices.length > 0 ? client.invoices[0].currency : "INR";
+
+    return {
+      id: client.id,
+      name: client.name,
+      email: client.email,
+      country: client.country,
+      totalBilled: client.invoices.reduce(
+        (sum: number, inv: Invoice) => sum + (inv.totalAmount || 0),
+        0,
+      ),
+      invoiceCurrency: currency,
+      invoiceCount: client.invoices.length,
+      invoices: client.invoices,
+    };
+  });
 }
-
 //  Archive Client
-
 export async function archiveClientAction(clientId: number) {
   const user = await currentUser();
   if (!user) throw new Error("Unauthorized");
@@ -66,7 +81,7 @@ export async function archiveClientAction(clientId: number) {
 
   revalidatePath("/clients");
 }
-
+// Unarchive Client
 export async function unarchiveClientAction(clientId: number) {
   const user = await currentUser();
   if (!user) throw new Error("Unauthorized");
@@ -78,7 +93,7 @@ export async function unarchiveClientAction(clientId: number) {
 
   revalidatePath("/clients");
 }
-
+// Render Archive Clients
 export async function getArchivedClientsAction() {
   const user = await currentUser();
   if (!user) throw new Error("Unauthorized");

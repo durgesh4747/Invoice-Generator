@@ -745,8 +745,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   clerkId: 'clerkId',
-  email: 'email',
   name: 'name',
+  email: 'email',
   createdAt: 'createdAt'
 } as const
 
@@ -768,14 +768,23 @@ export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof 
 export const InvoiceScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
+  issueDate: 'issueDate',
+  dueDate: 'dueDate',
   fromName: 'fromName',
   fromEmail: 'fromEmail',
   clientName: 'clientName',
   clientEmail: 'clientEmail',
-  totalAmount: 'totalAmount',
+  clientRegion: 'clientRegion',
+  status: 'status',
+  currency: 'currency',
   subtotal: 'subtotal',
-  taxAmount: 'taxAmount',
-  issueDate: 'issueDate',
+  taxLabel: 'taxLabel',
+  taxRate: 'taxRate',
+  discountAmount: 'discountAmount',
+  amountPaid: 'amountPaid',
+  totalAmount: 'totalAmount',
+  isArchived: 'isArchived',
+  notes: 'notes',
   userId: 'userId',
   clientId: 'clientId',
   createdAt: 'createdAt'

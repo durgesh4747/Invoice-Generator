@@ -23,7 +23,7 @@ export default function AddClientForm() {
 
   return (
     <div className="space-y-4 p-8 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 mb-10 transition-all">
-      <div className="flex items-center gap-3 mb-2">
+      <div className="flex items-center justify-center md:justify-normal gap-3 mb-2">
         <div className="bg-blue-50 p-2 rounded-lg text-blue-600">
           <UserPlus size={18} />
         </div>
@@ -32,7 +32,7 @@ export default function AddClientForm() {
         </h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
         <input
           placeholder="Full Name"
           value={newClient.name}

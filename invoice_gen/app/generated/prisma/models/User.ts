@@ -37,24 +37,24 @@ export type UserSumAggregateOutputType = {
 export type UserMinAggregateOutputType = {
   id: number | null
   clerkId: string | null
-  email: string | null
   name: string | null
+  email: string | null
   createdAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: number | null
   clerkId: string | null
-  email: string | null
   name: string | null
+  email: string | null
   createdAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   clerkId: number
-  email: number
   name: number
+  email: number
   createdAt: number
   _all: number
 }
@@ -71,24 +71,24 @@ export type UserSumAggregateInputType = {
 export type UserMinAggregateInputType = {
   id?: true
   clerkId?: true
-  email?: true
   name?: true
+  email?: true
   createdAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   clerkId?: true
-  email?: true
   name?: true
+  email?: true
   createdAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   clerkId?: true
-  email?: true
   name?: true
+  email?: true
   createdAt?: true
   _all?: true
 }
@@ -182,8 +182,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: number
   clerkId: string
-  email: string | null
   name: string | null
+  email: string | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -213,8 +213,8 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.IntFilter<"User"> | number
   clerkId?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringNullableFilter<"User"> | string | null
   name?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   clients?: Prisma.ClientListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
@@ -223,8 +223,8 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   clients?: Prisma.ClientOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
@@ -236,8 +236,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  email?: Prisma.StringNullableFilter<"User"> | string | null
   name?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   clients?: Prisma.ClientListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
@@ -246,8 +246,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -262,15 +262,15 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
   clerkId?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
@@ -279,8 +279,8 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: number
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
@@ -288,8 +288,8 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
@@ -298,8 +298,8 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
@@ -308,31 +308,31 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: number
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -343,16 +343,16 @@ export type UserAvgOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -415,8 +415,8 @@ export type UserUpdateOneRequiredWithoutInvoicesNestedInput = {
 
 export type UserCreateWithoutClientsInput = {
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
 }
@@ -424,8 +424,8 @@ export type UserCreateWithoutClientsInput = {
 export type UserUncheckedCreateWithoutClientsInput = {
   id?: number
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
 }
@@ -448,8 +448,8 @@ export type UserUpdateToOneWithWhereWithoutClientsInput = {
 
 export type UserUpdateWithoutClientsInput = {
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
 }
@@ -457,16 +457,16 @@ export type UserUpdateWithoutClientsInput = {
 export type UserUncheckedUpdateWithoutClientsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInvoicesInput = {
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
 }
@@ -474,8 +474,8 @@ export type UserCreateWithoutInvoicesInput = {
 export type UserUncheckedCreateWithoutInvoicesInput = {
   id?: number
   clerkId: string
-  email?: string | null
   name?: string | null
+  email?: string | null
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
 }
@@ -498,8 +498,8 @@ export type UserUpdateToOneWithWhereWithoutInvoicesInput = {
 
 export type UserUpdateWithoutInvoicesInput = {
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
 }
@@ -507,8 +507,8 @@ export type UserUpdateWithoutInvoicesInput = {
 export type UserUncheckedUpdateWithoutInvoicesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -556,8 +556,8 @@ export type UserCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.E
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkId?: boolean
-  email?: boolean
   name?: boolean
+  email?: boolean
   createdAt?: boolean
   clients?: boolean | Prisma.User$clientsArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
@@ -567,28 +567,28 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkId?: boolean
-  email?: boolean
   name?: boolean
+  email?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkId?: boolean
-  email?: boolean
   name?: boolean
+  email?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   clerkId?: boolean
-  email?: boolean
   name?: boolean
+  email?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkId" | "email" | "name" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkId" | "name" | "email" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clients?: boolean | Prisma.User$clientsArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
@@ -606,8 +606,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     clerkId: string
-    email: string | null
     name: string | null
+    email: string | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1036,8 +1036,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'Int'>
   readonly clerkId: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

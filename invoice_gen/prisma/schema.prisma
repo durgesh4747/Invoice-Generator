@@ -13,11 +13,17 @@ datasource db {
   provider = "postgresql" 
 }
 
+enum InvoiceStatus {
+  PAID
+  DRAFT
+  VOID
+}
+
 model User {
   id Int @id @default(autoincrement())
   clerkId String @unique
-  email String?
   name String?
+  email String?
 
   clients Client[]
   invoices Invoice[]
@@ -27,9 +33,9 @@ model User {
 
 model Client{
   id Int @id @default(autoincrement())
-  name String
+  name String?
   email String?
-  country   String?
+  country String?
   isArchived Boolean   @default(false)
   
   userId Int
@@ -41,24 +47,35 @@ model Client{
 model Invoice {
   id Int @id @default(autoincrement())
   invoiceNumber String
+
+  issueDate DateTime @default(now())
+  dueDate DateTime
   // Taken from User or edited by User
-  fromName      String   
-  fromEmail     String   
+  fromName      String?  
+  fromEmail     String?  
 
   // Taken from Client
-  clientName    String
-  clientEmail   String
+  clientName    String?
+  clientEmail   String?
+  clientRegion   String?
 
-  totalAmount Float
+  status String 
+  currency String @default("USD")
   subtotal Float
-  taxAmount Float
-  issueDate DateTime
-  
+  taxLabel String @default("Tax")
+  taxRate Float   @default(0)
+  discountAmount Float @default(0)
+  amountPaid Float @default(0)
+  totalAmount Float
+
+  isArchived  Boolean  @default(false)
+  notes String?
+
   userId Int
   user User @relation(fields: [userId], references: [id])
 
-  clientId Int
-  client Client @relation(fields:[clientId], references: [id])
+  clientId Int?
+  client Client? @relation(fields:[clientId], references: [id])
 
   items InvoiceItem[]
 

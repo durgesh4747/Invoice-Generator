@@ -1,20 +1,33 @@
+"use client";
 import { Show } from "@clerk/nextjs";
-import Link from "next/link";
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react";
+import { useGlobalLoader } from "./GlobalLoader";
+import { useRouter } from "next/navigation";
 
 export default function Footer() {
+  const { setIsGlobalLoading } = useGlobalLoader();
+  const router = useRouter();
+
+  const handleNavigation = (href: string) => {
+    setIsGlobalLoading(true);
+    router.push(href);
+    setTimeout(() => setIsGlobalLoading(false));
+  };
   return (
     <footer className=" border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand Detaild */}
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="text-xl font-bold text-slate-900">
+            <button
+              onClick={() => handleNavigation("/")}
+              className="text-xl font-bold text-slate-900"
+            >
               GetInv<span className="text-blue-600">.</span>
-            </Link>
+            </button>
             <p className="mt-4 text-sm text-slate-500 max-w-xs leading-relaxed">
-              High-performance invoicing for modern freelancers. Built with
-              Next.js 16 and Prisma in Vadodara.
+              High-performance invoicing for modern businesses and agencies.
+              Built with the professional architect brain.
             </p>
             <div className="mt-6 flex gap-4 text-slate-400">
               <a
@@ -48,28 +61,28 @@ export default function Footer() {
             <ul className="mt-4 space-y-2">
               <Show when="signed-in">
                 <li>
-                  <Link
-                    href="/dashboard"
+                  <button
+                    onClick={() => handleNavigation("/dashboard")}
                     className="text-sm text-slate-500 hover:text-blue-600"
                   >
                     Dashboard
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link
-                    href="/generateInvoice"
+                  <button
+                    onClick={() => handleNavigation("/generateInvoice")}
                     className="text-sm text-slate-500 hover:text-blue-600"
                   >
                     Create Invoice
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link
-                    href="/clients"
+                  <button
+                    onClick={() => handleNavigation("/clients")}
                     className="text-sm text-slate-500 hover:text-blue-600"
                   >
                     Manage Clients
-                  </Link>
+                  </button>
                 </li>
               </Show>
               <Show when="signed-out">
@@ -145,12 +158,24 @@ export default function Footer() {
         <div className="mt-12 border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400 font-medium">
           <p>© {new Date().getFullYear()} GetInv. Created by Durgesh.</p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-slate-600">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-slate-600">
+            <button
+              onClick={() =>
+                alert(
+                  "Terms: Use this tool to bill clients. Don't do illegal stuff.",
+                )
+              }
+            >
               Terms
-            </Link>
+            </button>
+            <button
+              onClick={() =>
+                alert(
+                  "Privacy: We store your invoice data securely via Clerk and Prisma.",
+                )
+              }
+            >
+              Privacy
+            </button>
           </div>
         </div>
       </div>

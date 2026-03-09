@@ -1,6 +1,6 @@
 @layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
-html{
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }

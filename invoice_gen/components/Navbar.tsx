@@ -1,34 +1,46 @@
 "use client";
 
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { useGlobalLoader } from "./GlobalLoader";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const { setIsGlobalLoading } = useGlobalLoader();
+  const router = useRouter();
+
+  const handleNavigation = (href: string) => {
+    setIsGlobalLoading(true);
+    router.push(href);
+    setTimeout(() => setIsGlobalLoading(false));
+  };
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="flex h-16 w-full items-center justify-around px-2">
         {/* Left Side */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-xl font-bold text-slate-900">
+          <button
+            onClick={() => handleNavigation("/")}
+            className="text-xl font-bold text-slate-900 cursor-pointer"
+          >
             GetInv<span className="text-blue-600">.</span>
-          </Link>
+          </button>
         </div>
         <div>
           <nav className="hidden md:flex items-center gap-6">
             <Show when="signed-in">
-              <Link
-                href="/dashboard"
+              <button
+                onClick={() => handleNavigation(`/dashboard`)}
                 className="text-sm font-medium text-slate-600 hover:text-white p-3 rounded-3xl hover:bg-blue-500"
               >
                 Dashboard
-              </Link>
-              <Link
-                href="/generateInvoice"
+              </button>
+              <button
+                onClick={() => handleNavigation(`/generateInvoice`)}
                 className="text-sm font-medium text-slate-600 hover:text-white p-3 rounded-3xl hover:bg-blue-500 flex items-center gap-1"
               >
                 Create Invoice
-              </Link>
+              </button>
             </Show>
 
             <a

@@ -2,7 +2,16 @@ import { auth } from "@clerk/nextjs/server";
 import HomepageNotOnLogin from "@/components/NotOnLoginComponents/HomePageNotOnLogin";
 import HomepageOnLogin from "@/components/OnLoginComponents/HomePageOnLogin";
 
-export default async function Home() {
+type HomeProps = {
+  searchParams: Promise<{ curr?: string }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
   const { userId } = await auth();
-  return userId ? <HomepageOnLogin /> : <HomepageNotOnLogin />;
+
+  return userId ? (
+    <HomepageOnLogin searchParams={searchParams} />
+  ) : (
+    <HomepageNotOnLogin />
+  );
 }

@@ -167,7 +167,9 @@ export default async function InvoicePage({
                       </td>
                       <td className="py-6 px-2 text-right font-black text-slate-900">
                         {symbol}
-                        {(item.quantity * item.price).toLocaleString()}
+                        {(
+                          Number(item.quantity) * Number(item.price)
+                        ).toLocaleString()}
                       </td>
                     </tr>
                   ))}
@@ -259,8 +261,9 @@ export default async function InvoicePage({
               <DownloadButton
                 invoice={invoice}
                 user={{
-                  fullName: user.fullName,
-                  primaryEmail: user.emailAddresses[0].emailAddress,
+                  fullName: user.fullName ?? "User",
+                  primaryEmail:
+                    user?.emailAddresses[0]?.emailAddress ?? "" ,
                 }}
               >
                 <div className="flex items-center gap-2 text-white px-2 py-2 rounded-full font-black text-sm shadow-xl transition-all active:scale-95">

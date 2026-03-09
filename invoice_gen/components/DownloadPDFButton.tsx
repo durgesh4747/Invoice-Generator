@@ -18,8 +18,8 @@ const PDFDownloadLink = dynamic(
 );
 
 interface UserProfile {
-  name: string;
-  email: string;
+  fullName: string;
+  primaryEmail: string;
 }
 
 interface DownloadButtonProps {

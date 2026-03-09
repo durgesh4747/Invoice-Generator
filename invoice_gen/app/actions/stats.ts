@@ -40,7 +40,7 @@ export async function getStatsNow(targetCurrency: string = "USD") {
       }, 0);
     }
   } catch (error) {
-    console.error("❌ Stats API Failed:", error);
+    console.error("Stats API Failed:", error);
     totalRevenue = invoices.reduce(
       (sum, inv) => sum + (inv.amountPaid || 0),
       0,

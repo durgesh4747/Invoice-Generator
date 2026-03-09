@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // 🚨 Columns Swapped: Type is now before Description
   colType: { width: "15%", textAlign: "left" },
   colDesc: { width: "40%" },
   colQty: { width: "10%", textAlign: "center" },
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
   },
   cellText: { fontSize: 9, color: "#334155" },
 
-  // 🚨 No background on typeTag
   typeTag: {
     fontSize: 7,
     color: "#475569",
@@ -122,7 +120,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const InvoicePDF = ({ invoice, user }: { invoice:InvoicePayload; user: UserProfile }) => {
+export const InvoicePDF = ({
+  invoice,
+  user,
+}: {
+  invoice: InvoicePayload;
+  user: UserProfile;
+}) => {
   const formatAmount = (amount: number) => {
     return Number(amount).toFixed(2);
   };
@@ -220,7 +224,7 @@ export const InvoicePDF = ({ invoice, user }: { invoice:InvoicePayload; user: Us
               <Text style={[styles.colQty, styles.cellText]}>
                 {item.quantity}
               </Text>
-              {/* 🚨 Split Price Tag */}
+              {/* Split Price Tag */}
               <View
                 style={[
                   styles.colPrice,
@@ -233,7 +237,7 @@ export const InvoicePDF = ({ invoice, user }: { invoice:InvoicePayload; user: Us
                   {formatAmount(Number(item.price))}
                 </Text>
               </View>
-              {/* 🚨 Split Total Tag */}
+              {/* Split Total Tag */}
               <View
                 style={[
                   styles.colTotal,

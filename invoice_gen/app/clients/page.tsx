@@ -64,7 +64,7 @@ export default async function ClientsPage() {
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center font-black text-sm">
-                          {client.name.charAt(0)}
+                          {client.name??"Client".charAt(0)}
                         </div>
                         <div>
                           <p className="font-bold text-slate-900">
@@ -91,7 +91,7 @@ export default async function ClientsPage() {
                     <td className="px-8 py-6">
                       <div className="flex items-center justify-end gap-2">
                         <Link
-                          href={`/generateInvoice?clientId=${client.id}&name=${encodeURIComponent(client.name)}&email=${client.email}&region=${encodeURIComponent(client.country || "")}`}
+                          href={`/generateInvoice?clientId=${client.id}&name=${encodeURIComponent(client.name??"Client")}&email=${client.email}&region=${encodeURIComponent(client.country || "")}`}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-black hover:bg-slate-900 transition-all shadow-lg shadow-blue-100"
                         >
                           <ReceiptText size={14} />

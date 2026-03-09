@@ -50,19 +50,18 @@ export default async function HomepageOnLogin(props: {
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-        {/* REVENUE CARD */}
+        {/* Revenue Card */}
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden group">
           <div className="flex justify-between items-start mb-4">
             <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
               <CreditCard size={20} />
             </div>
 
-            {/* CURRENCY SWITCHER */}
+            {/* Currency Switcher*/}
             <div className="flex bg-slate-50 border border-slate-100 rounded-md p-0.5">
               {currencies.map((c) => (
                 <RedirectButton
                   key={c.code}
-                  // 🚀 This triggers your GlobalLoader automatically
                   href={`?curr=${c.code}`}
                   className={`px-2 py-1 text-[9px] font-black rounded transition-all cursor-pointer ${
                     selectedCurr === c.code
@@ -86,7 +85,7 @@ export default async function HomepageOnLogin(props: {
           <div className="absolute -top-10 -right-10 w-24 h-24 bg-emerald-500/5 blur-3xl rounded-full" />
         </div>
 
-        {/* INVOICE COUNT */}
+        {/* Invoice Count */}
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex flex-col justify-end">
           <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
             <FileText size={20} />
@@ -97,7 +96,7 @@ export default async function HomepageOnLogin(props: {
           </p>
         </div>
 
-        {/* CLIENT COUNT */}
+        {/* Client Count */}
         <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex flex-col justify-end">
           <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4">
             <Users size={20} />
@@ -109,7 +108,7 @@ export default async function HomepageOnLogin(props: {
         </div>
       </div>
 
-      {/* --- NAVIGATION CARDS --- */}
+      {/* Navigation Cards*/}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
         <RedirectButton
           href="/dashboard"

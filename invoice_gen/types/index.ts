@@ -43,9 +43,12 @@ export interface ClientData {
 
 export interface SavedClient {
   id: number;
-  name: string;
-  email: string;
-  country: string;
+  name: string | null; 
+  email: string | null; 
+  country: string | null;
+  totalBilled: number;
+  invoiceCurrency: string;
+  invoiceCount: number;
 }
 
 export interface ClientPayload {

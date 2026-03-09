@@ -29,7 +29,7 @@ export default function GenerateInvoice({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // 1. Initial State Logic
+  // Initial State Logic
   const clientIdFromUrl = searchParams.get("clientId");
   const preSelected = clientIdFromUrl
     ? savedClients.find((c) => c.id === Number(clientIdFromUrl))
@@ -125,7 +125,16 @@ export default function GenerateInvoice({
 
   const handleSubmit = (isDraftMode: boolean, forceSubmit = false) => {
     const invoiceNumber = initialData?.invoiceNumber || "";
-
+    if (
+      !sender.name.trim() ||
+      !clientData.name.trim() ||
+      items.some((item) => !item.description.trim())
+    ) {
+      alert(
+        "Required Fields Missing: Please ensure your name, client name, and item descriptions are filled out.",
+      );
+      return;
+    }
     if (status === "PAID" && balanceDue > 0 && !forceSubmit) {
       setShowBalanceWarning(true);
       return;
@@ -483,10 +492,9 @@ export default function GenerateInvoice({
                 )}
               </div>
 
-              {/* 🚨 SIMPLIFIED DYNAMIC BUTTON SECTION */}
+              {/* Dynamic Button */}
               <div className="flex justify-end w-full md:w-auto">
                 {status === "PENDING" ? (
-                  /* PENDING MODE: Clean, minimal "Save Draft" button */
                   <button
                     onClick={() => handleSubmit(true)}
                     disabled={isSavingDraft || isGenerating}
@@ -502,7 +510,6 @@ export default function GenerateInvoice({
                     )}
                   </button>
                 ) : (
-                  /* PAID MODE: Strong, high-contrast "Finalize" button */
                   <button
                     onClick={() => handleSubmit(false)}
                     disabled={isSavingDraft || isGenerating}
@@ -552,22 +559,18 @@ export default function GenerateInvoice({
             </p>
 
             <div className="flex flex-col gap-3">
-              {/* Highlighted Choice: Save as Draft */}
               <button
                 onClick={() => {
-                  setStatus("PENDING"); // Auto-switch back to pending
+                  setStatus("PENDING");
                   setShowBalanceWarning(false);
-                  // Optional: immediately trigger a draft save
-                  // handleSubmit(true, true);
                 }}
                 className="w-full py-4 bg-blue-600 text-white rounded-2xl font-black text-sm  shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95"
               >
                 Save as Draft for Now
               </button>
 
-              {/* Secondary Choice: Finalize anyway */}
               <button
-                onClick={() => handleSubmit(false, true)} // forceSubmit = true
+                onClick={() => handleSubmit(false, true)}
                 className="w-full group py-4 bg-white text-red-700 rounded-2xl font-bold text-xs border-black border hover:text-red-900 transition-all"
               >
                 Finalize & Save Anyways

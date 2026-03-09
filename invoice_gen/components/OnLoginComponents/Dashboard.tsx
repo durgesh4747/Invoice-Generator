@@ -200,7 +200,7 @@ export default function DashboardUI({
           )}
         </div>
 
-        {/* --- ARCHIVE SECTION --- */}
+        {/* Archive Section*/}
         {archivedInvoices && archivedInvoices.length > 0 && (
           <div className="mt-12">
             <details className="group">

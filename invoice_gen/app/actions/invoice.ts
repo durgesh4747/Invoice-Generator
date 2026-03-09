@@ -29,7 +29,7 @@ export async function createInvoiceAction(payload: InvoicePayload) {
     status,
   } = payload;
 
-  // 1. Calculations
+  // Calculations
   const subtotal = items.reduce(
     (sum: number, item: InvoiceItem) =>
       sum + (Number(item.quantity) * Number(item.price) || 0),
@@ -42,7 +42,7 @@ export async function createInvoiceAction(payload: InvoicePayload) {
   const internalUser = await prisma.user.findUnique({ where: { clerkId } });
   if (!internalUser) throw new Error("User not found");
 
-  // 2. Database Transaction
+  // Database Transaction
   await prisma.$transaction(async (tx) => {
     let targetClientId = payload.clientId ? Number(payload.clientId) : null;
 
@@ -67,7 +67,7 @@ export async function createInvoiceAction(payload: InvoicePayload) {
     }
 
     if (id) {
-      // UPDATE INVOICE
+      // Update Invoice
       await tx.invoiceItem.deleteMany({ where: { invoiceId: id } });
       return await tx.invoice.update({
         where: { id: id },
@@ -101,7 +101,6 @@ export async function createInvoiceAction(payload: InvoicePayload) {
       });
     }
 
-    //  SEQUENTIAL INVOICE NUMBER LOGIC
     const lastInvoice = await tx.invoice.findFirst({
       where: { userId: internalUser.id },
       orderBy: { createdAt: "desc" },
@@ -115,7 +114,7 @@ export async function createInvoiceAction(payload: InvoicePayload) {
       nextInvoiceNumber = `INV-${nextNumber.toString().padStart(3, "0")}`;
     }
 
-    // CREATE NEW INVOICE
+    // Creating new invoice
     return await tx.invoice.create({
       data: {
         invoiceNumber: nextInvoiceNumber,

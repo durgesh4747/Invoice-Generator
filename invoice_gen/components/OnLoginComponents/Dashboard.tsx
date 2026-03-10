@@ -88,8 +88,8 @@ export default function DashboardUI({
             <span>Invoice</span>
             <span className="hidden md:block">Client</span>
             <span className="hidden md:block text-center">Status</span>
-            <span className="text-right md:text-left">Total</span>
-            <span className="hidden md:block">Paid</span>
+            <span className="text-right md:text-left">Total Amount</span>
+            <span className="hidden md:block">Paid Amount</span>
             <span className="text-right">Action</span>
           </div>
 

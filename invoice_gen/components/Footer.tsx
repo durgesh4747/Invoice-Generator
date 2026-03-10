@@ -78,7 +78,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <button
-                    onClick={() => handleNavigation("/clients")}
+                    onClick={() => handleNavigation("/client-directory")}
                     className="text-sm text-slate-500 hover:text-blue-600"
                   >
                     Manage Clients

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   totalLabel: { fontSize: 9, color: "#64748b" },
   totalValue: { fontSize: 10, fontWeight: "bold", color: "#0f172a" },
   grandTotalLabel: { fontSize: 11, fontWeight: "bold", color: "#0f172a" },
-  grandTotalValue: { fontSize: 16, fontWeight: "bold", color: "#2563eb" },
+  grandTotalValue: { fontSize: 16, fontWeight: "bold", color: "#0f172a" },
 
   statusWrapper: {
     marginTop: 12,
@@ -224,7 +224,6 @@ export const InvoicePDF = ({
               <Text style={[styles.colQty, styles.cellText]}>
                 {item.quantity}
               </Text>
-              {/* Split Price Tag */}
               <View
                 style={[
                   styles.colPrice,
@@ -237,17 +236,14 @@ export const InvoicePDF = ({
                   {formatAmount(Number(item.price))}
                 </Text>
               </View>
-              {/* Split Total Tag */}
               <View
                 style={[
                   styles.colTotal,
                   { flexDirection: "row", justifyContent: "flex-end" },
                 ]}
               >
-                <Text style={[styles.cellText, { fontWeight: "bold" }]}>
-                  {symbol}
-                </Text>
-                <Text style={[styles.cellText, { fontWeight: "bold" }]}>
+                <Text style={styles.cellText}>{symbol}</Text>
+                <Text style={styles.cellText}>
                   {" "}
                   {formatAmount(Number(item.quantity) * Number(item.price))}
                 </Text>
@@ -272,14 +268,10 @@ export const InvoicePDF = ({
 
             {Number(invoice.discountAmount) > 0 && (
               <View style={styles.totalRow}>
-                <Text style={[styles.totalLabel, { color: "#ef4444" }]}>
-                  Discount
-                </Text>
+                <Text style={styles.totalLabel}>Discount</Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={[styles.totalValue, { color: "#ef4444" }]}>
-                    {symbol}
-                  </Text>
-                  <Text style={[styles.totalValue, { color: "#ef4444" }]}>
+                  <Text style={styles.totalValue}>{symbol}</Text>
+                  <Text style={styles.totalValue}>
                     {" "}
                     {formatAmount(Number(invoice.discountAmount))}
                   </Text>
@@ -325,14 +317,10 @@ export const InvoicePDF = ({
             </View>
 
             <View style={[styles.totalRow, { marginTop: 2 }]}>
-              <Text style={[styles.totalLabel, { color: "#059669" }]}>
-                Amount Paid
-              </Text>
+              <Text style={styles.totalLabel}>Amount Paid</Text>
               <View style={{ flexDirection: "row" }}>
-                <Text style={[styles.totalValue, { color: "#059669" }]}>
-                  {symbol}
-                </Text>
-                <Text style={[styles.totalValue, { color: "#059669" }]}>
+                <Text style={styles.totalValue}>{symbol}</Text>
+                <Text style={styles.totalValue}>
                   {" "}
                   {formatAmount(amountPaid)}
                 </Text>
@@ -359,7 +347,6 @@ export const InvoicePDF = ({
                     styles.grandTotalValue,
                     {
                       fontSize: 13,
-                      color: balanceDue <= 0 ? "#059669" : "#0f172a",
                     },
                   ]}
                 >
@@ -370,7 +357,6 @@ export const InvoicePDF = ({
                     styles.grandTotalValue,
                     {
                       fontSize: 13,
-                      color: balanceDue <= 0 ? "#059669" : "#0f172a",
                     },
                   ]}
                 >
@@ -403,19 +389,21 @@ export const InvoicePDF = ({
           </View>
         </View>
 
-        <View style={styles.notesSection}>
-          <Text style={styles.label}>Notes & Payment Terms</Text>
-          <Text
-            style={{
-              fontSize: 9,
-              color: "#475569",
-              lineHeight: 1.6,
-              marginTop: 4,
-            }}
-          >
-            {invoice.notes || "Standard payment terms apply."}
-          </Text>
-        </View>
+        {invoice.notes && (
+          <View style={styles.notesSection}>
+            <Text style={styles.label}>Notes & Payment Terms</Text>
+            <Text
+              style={{
+                fontSize: 9,
+                color: "#475569",
+                lineHeight: 1.6,
+                marginTop: 4,
+              }}
+            >
+              {invoice.notes}
+            </Text>
+          </View>
+        )}
       </Page>
     </Document>
   );

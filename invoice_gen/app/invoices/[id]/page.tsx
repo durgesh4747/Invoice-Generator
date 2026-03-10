@@ -2,9 +2,9 @@ import getInvoicebyID from "@/lib/getInvoicebyID";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Download, ArrowLeft, Calendar } from "lucide-react";
-import Link from "next/link";
 import DownloadButton from "@/components/DownloadPDFButton";
 import { InvoiceItem } from "@/types";
+import RedirectButton from "@/components/OnLoginComponents/Loader";
 
 export default async function InvoicePage({
   params,
@@ -41,7 +41,7 @@ export default async function InvoicePage({
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
       <div className="mx-auto max-w-4xl">
-        <Link
+        <RedirectButton
           href="/dashboard"
           className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 mb-8 transition-all group"
         >
@@ -50,7 +50,7 @@ export default async function InvoicePage({
             className="group-hover:-translate-x-1 transition-transform"
           />
           Back to Dashboard
-        </Link>
+        </RedirectButton>
 
         <div className="bg-white shadow-2xl rounded-[2.5rem] border border-slate-200 overflow-hidden">
           {/* HEADER SECTION */}
@@ -135,8 +135,8 @@ export default async function InvoicePage({
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b-2 border-slate-900 text-[10px] font-black uppercase tracking-widest text-slate-900">
-                    <th className="py-4 px-2">Description</th>
                     <th className="py-4 px-2 text-center">Type</th>
+                    <th className="py-4 px-2">Description</th>
                     <th className="py-4 px-2 text-center">Qty</th>
                     <th className="py-4 px-2 text-right">Price</th>
                     <th className="py-4 px-2 text-right">Amount</th>
@@ -148,15 +148,15 @@ export default async function InvoicePage({
                       key={item.id}
                       className="text-sm group hover:bg-slate-50/50 transition-colors"
                     >
-                      <td className="py-6 px-2">
-                        <p className="font-bold text-slate-900">
-                          {item.description}
-                        </p>
-                      </td>
                       <td className="py-6 px-2 text-center">
                         <span className="text-[9px] font-black bg-slate-100 px-2 py-1 rounded-md text-slate-500 uppercase">
                           {item.type}
                         </span>
+                      </td>
+                      <td className="py-6 px-2">
+                        <p className="font-bold text-slate-900">
+                          {item.description}
+                        </p>
                       </td>
                       <td className="py-6 px-2 text-center font-medium text-slate-500">
                         {item.quantity}
@@ -189,8 +189,8 @@ export default async function InvoicePage({
               </div>
 
               <div className="w-full md:w-96 space-y-3 p-8 bg-slate-50 rounded-4xl border border-slate-100">
-                <div className="flex justify-between text-xs font-bold">
-                  <span className="text-slate-400 uppercase tracking-widest">
+                <div className="flex justify-between text-xs font-bold pt-2">
+                  <span className="text-slate-500 uppercase tracking-widest">
                     Subtotal
                   </span>
                   <span className="text-slate-900">
@@ -199,45 +199,51 @@ export default async function InvoicePage({
                   </span>
                 </div>
 
+                {invoice.taxRate && invoice.taxLabel ? (
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-500 uppercase tracking-widest">
+                      {invoice.taxLabel} ({invoice.taxRate}%)
+                    </span>
+                    <span className="text-slate-900">
+                      {symbol}
+                      {(
+                        (invoice.subtotal - invoice.discountAmount) *
+                        (invoice.taxRate / 100)
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 {invoice.discountAmount > 0 && (
-                  <div className="flex justify-between text-xs font-bold text-red-500">
-                    <span className="uppercase tracking-widest">Discount</span>
-                    <span>
-                      -{symbol}
+                  <div className="flex justify-between text-xs font-bold text-slate-400">
+                    <span className="uppercase tracking-widest text-slate-500">
+                      Discount
+                    </span>
+                    <span className="text-slate-900">
+                      {symbol}
                       {invoice.discountAmount.toLocaleString()}
                     </span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-xs font-bold">
-                  <span className="text-slate-400 uppercase tracking-widest">
-                    {invoice.taxLabel} ({invoice.taxRate}%)
-                  </span>
-                  <span className="text-slate-900">
-                    {symbol}
-                    {(
-                      (invoice.subtotal - invoice.discountAmount) *
-                      (invoice.taxRate / 100)
-                    ).toLocaleString()}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center border-slate-200">
-                  <span className="text-xs font-black uppercase tracking-widest text-slate-900">
+                <div className="flex justify-between items-center pt-2 border-slate-300 border-t">
+                  <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
                     Total Amount
                   </span>
-                  <span className="text-xs font-black text-slate-900">
+                  <span className="text-xs font-bold text-slate-900">
                     {symbol}
                     {invoice.totalAmount.toLocaleString()}
                   </span>
                 </div>
 
                 {invoice.amountPaid > 0 && (
-                  <div className="flex justify-between items-center border-slate-200 text-xs font-bold text-emerald-600">
-                    <span className="text-xs uppercase font-black tracking-widest">
+                  <div className="flex justify-between items-center border-slate-200 text-xs font-bold text-slate-900">
+                    <span className="text-xs uppercase font-bold tracking-widest text-slate-500">
                       Amount Paid
                     </span>
-                    <span className="text-xs font-black">
+                    <span className="text-xs font-bold">
                       {symbol}
                       {invoice.amountPaid.toLocaleString()}
                     </span>
@@ -245,7 +251,7 @@ export default async function InvoicePage({
                 )}
 
                 <div className="flex justify-between items-center border-y py-3">
-                  <span className="text-xs font-black uppercase tracking-tighter text-slate-900">
+                  <span className="text-xs font-bold uppercase tracking-tighter text-slate-700">
                     Balance Due
                   </span>
                   <span className="text-xs font-black text-slate-900">
@@ -262,8 +268,7 @@ export default async function InvoicePage({
                 invoice={invoice}
                 user={{
                   fullName: user.fullName ?? "User",
-                  primaryEmail:
-                    user?.emailAddresses[0]?.emailAddress ?? "" ,
+                  primaryEmail: user?.emailAddresses[0]?.emailAddress ?? "",
                 }}
               >
                 <div className="flex items-center gap-2 text-white px-2 py-2 rounded-full font-black text-sm shadow-xl transition-all active:scale-95">

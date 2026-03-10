@@ -33,11 +33,11 @@ export default async function HomepageOnLogin(props: {
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-            Welcome back,{" "}
+            Welcome,{" "}
             <span className="text-blue-600">{user?.firstName || "there"}</span>
           </h1>
           <p className="text-slate-500 mt-1">
-            Tracking your global freelance wealth.
+            Managing your business invoicing and financial growth.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export default async function HomepageOnLogin(props: {
         </RedirectButton>
 
         <RedirectButton
-          href="/clients"
+          href="/client-directory"
           className="group flex flex-col h-full p-8 bg-white border border-slate-200 rounded-4xl hover:border-purple-300 transition-all hover:shadow-xl text-left"
         >
           <h3 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 tracking-tight">

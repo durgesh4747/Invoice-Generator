@@ -43,7 +43,7 @@ export default async function HomepageOnLogin(props: {
 
         <RedirectButton
           href="/generateInvoice"
-          className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-500 transition-all shadow-lg active:scale-95"
+          className="flex items-center justify-center md:justify-normal gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-500 transition-all shadow-lg active:scale-95"
         >
           <Plus size={18} /> Create New Invoice
         </RedirectButton>

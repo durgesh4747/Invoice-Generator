@@ -184,7 +184,7 @@ export default function GenerateInvoice({
       <div className="max-w-5xl mx-auto px-4 pt-8">
         <div className="flex flex-col md:flex-row md:items-center justify-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 text-center tracking-tighter italic">
+            <h1 className="text-3xl font-black text-slate-900 md:text-center tracking-tighter italic">
               GetInv<span className="text-blue-600">.</span>
             </h1>
             <p className="text-slate-500 text-sm font-medium">
@@ -454,13 +454,13 @@ export default function GenerateInvoice({
               />
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 pt-10 border-t border-slate-100">
-              <div className="flex flex-col sm:flex-row gap-8">
-                <div className="flex items-center gap-4 text-slate-900 text-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-10 border-t border-slate-100">
+              <div className="flex flex-col sm:flex-row gap-8  ">
+                <div className="flex gap-4 text-slate-900 text-sm">
                   <div className="p-3 bg-blue-50 rounded-2xl">
                     <Info size={18} className="text-blue-600" />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col justify-start">
                     <span className="text-[10px] font-black text-slate-400 uppercase">
                       Total Amount
                     </span>
